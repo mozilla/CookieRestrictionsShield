@@ -58,8 +58,10 @@ class NotificationBarEventEmitter extends EventEmitter {
       disableHighlight: true,
       label: "Yes (broken)",
       accessKey: "f",
-      callback: ({checkboxChecked}) => {
-        self.emit("page-broken", tabId, checkboxChecked);
+      callback: (data) => {
+        const addExceptionButton = recentWindow.document.getElementById("tracking-action-unblock");
+        addExceptionButton.doCommand();
+        self.emit("page-broken", tabId, data.checkboxChecked);
       },
     };
 
