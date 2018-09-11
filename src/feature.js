@@ -61,6 +61,10 @@ class Feature {
       const hash = await this.SHA256(userid + etld);
       tabInfo.telemetryPayload.etld = hash;
 
+      if (!tabInfo.previousPagesWereInteracted) {
+        return;
+      }
+
       // Show the user a survey if the page was reloaded.
       tabInfo.reloadCount++;
       this.possiblyShowNotification(tabInfo);
@@ -75,10 +79,12 @@ class Feature {
 
       const tabInfo = TabRecords.getOrInsertTabInfo(tabId);
 
+      tabInfo.previousPagesWereInteracted = data.previousPagesWereInteracted || tabInfo.previousPagesWereInteracted;
       // Reset survey count when no longer refreshing
       if (!data.page_reloaded) {
         tabInfo.surveyShown = false;
         tabInfo.reloadCount = 0;
+        tabInfo.previousPagesWereInteracted = false;
       }
       tabInfo.telemetryPayload.embedded_social_script = data.embedded_social_script;
       tabInfo.telemetryPayload.login_form_on_page = data.login_form_on_page;
