@@ -52,6 +52,7 @@ window.TabRecords = {
     tabInfo = {
       surveyShown: false,
       reloadCount: 0,
+      previousPagesWereInteracted: false,
     };
 
     this._tabs.set(tabId, tabInfo);

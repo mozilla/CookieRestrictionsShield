@@ -50,7 +50,9 @@ addEventListener("DOMContentLoaded", function(e) {
     telemetryData.completeLocation = content.location.href;
     if (docShell && docShell.document) {
       telemetryData.num_blockable_trackers = docShell.document.numTrackersFound;
+      telemetryData.previousPagesWereInteracted = docShell.document.userHasInteracted;
     } else {
+      telemetryData.previousPagesWereInteracted = false;
       telemetryData.num_blockable_trackers = -1; // some sort of error here
     }
 
